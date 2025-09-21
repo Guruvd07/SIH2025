@@ -1,0 +1,88 @@
+(b) Social Media Feeds
+
+Twitter API (X API v2) → Tweets with keywords like "flood", "tsunami", "cyclone".
+YouTube API → Comments on weather-related news.
+Facebook Graph API → Public posts.
+(Optional) Instagram API → Hashtags search.
+
+👉 Tech: Python scripts with tweepy, google-api-python-client, facebook-sdk.
+----------------------------------------------------------------------------------------
+
+Social media pe hazaaron posts hote hain:
+
+Kuch relevant (e.g. "Cyclone ne Goa ke beach pe flood kar diya").
+Kuch irrelevant (e.g. "Aaj beach pe party mast thi").
+Kuch panic waale (e.g. "Help! Paani ghar ke andar aa raha hai").
+Kuch informative waale (e.g. "Waves 3 meter tak badh gaye").
+
+System ko ye decide karna hai:
+👉 Konsa post hazard-related hai aur uska sentiment kya hai (panic, neutral, alert).
+
+
+Data Collection
+
+Twitter API, Facebook Graph API, YouTube comments API se posts collect honge.
+
+Har post ke sath metadata (time, location, hashtags) bhi milega.
+---------------------------------------------------------------------------------------
+2. Text Preprocessing (NLP ke liye safai)
+
+Remove stopwords (the, is, are, ka, ki, etc.).
+Convert text to lower case.
+Tokenization (text ko words me todna).
+Lemmatization/Stemming (flooding → flood, waves → wave).
+Multilingual posts ke liye → translate ya regional NLP models use karenge.
+
+Example:
+Raw tweet: "OMG! High waves hitting Chennai beach right now 😱 #cyclone"
+Processed: ["high", "wave", "hit", "chennai", "beach", "cyclone"]
+--------------------------------------------------------------------------------------
+3. Hazard Classification (Relevant vs. Irrelevant)
+
+ML/NLP Model train karenge hazard-related keywords aur context pe.
+
+Algorithms: Logistic Regression, Naive Bayes, Random Forest, ya deep learning models (BERT, DistilBERT).
+
+Model decide karega:
+1 = Hazard-related
+0 = Not related
+
+Example:
+"Cyclone water entering house" → Relevant ✅
+"Beach party was fun" → Not relevant ❌
+-----------------------------------------------------------------------------------------
+4. Sentiment Analysis (Emotions + Urgency)
+
+Sentiment ka matlab hai tone of the message.
+
+Categories ho sakti hain:
+Positive → ("Relief team arrived", "We are safe")
+Negative/Panic → ("Water entering homes", "People drowning")
+Neutral/Informative → ("Waves height 3m recorded")
+
+Tools:
+
+Pre-trained models (VADER, TextBlob for English).
+HuggingFace Transformers (multilingual sentiment models).
+
+Example:
+
+"Help! Flood water rising rapidly" → Negative/Panic 😨
+"High tide observed near Mumbai coast" → Neutral ℹ️
+"Rescue team reached Kerala village" → Positive 🙂
+-----------------------------------------------------------------------------------------
+Example Flow
+
+Twitter se ek post aata hai:
+"Water level crossing danger mark in Vizag port. Please help!"
+Preprocess: ["water", "level", "cross", "danger", "mark", "vizag", "port", "help"]
+Hazard classifier → Relevant ✅
+Sentiment model → Negative (panic/urgent) 😨
+Dashboard → Vizag ke map pe red hotspot + keyword “flood” show hoga.
+
+----------------------------------------------------------------------------------------
+👉 Matlab simple shabdo me:
+
+NLP = post ko samajhna (ye hazard related hai ya bakwaas).
+Sentiment Analysis = post ki feeling samajhna (panic, neutral, positive).
+Ye dono milke system ko batayenge ki real hazard ho raha hai ya sirf charcha chal rahi hai.
